@@ -75,9 +75,8 @@ export function VideoClipModal({ isOpen, onClose }: VideoClipModalProps) {
   const handleCopyLink = async () => {
     if (videoUrl) {
       try {
-        // Create full URL with protocol and domain
-        const fullUrl = `${window.location.origin}${videoUrl}`
-        await navigator.clipboard.writeText(fullUrl)
+        // Video URL is already the full GitHub URL, just copy it directly
+        await navigator.clipboard.writeText(videoUrl)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
       } catch (err) {
@@ -89,9 +88,8 @@ export function VideoClipModal({ isOpen, onClose }: VideoClipModalProps) {
   const handleShare = (platform: string) => {
     if (!videoUrl) return
 
-    // Create full URL with protocol and domain
-    const fullUrl = `${window.location.origin}${videoUrl}`
-    const shareUrl = encodeURIComponent(fullUrl)
+    // Video URL is already the full GitHub URL
+    const shareUrl = encodeURIComponent(videoUrl)
     const shareText = encodeURIComponent('Check out this clip from The Theatre Podcast!')
 
     const urls: Record<string, string> = {

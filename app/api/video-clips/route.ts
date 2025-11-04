@@ -1,30 +1,24 @@
 import { NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
+
+// List of video clips hosted on GitHub LFS
+// Update this list when you add new videos
+const VIDEO_CLIPS = [
+  'Audition Gone Wrong- A Lesson in Resilience.mp4',
+  'Dream Casting LSOH.mp4',
+  'Plot in 60s - Aladdin.mp4',
+  'Plot in 60s - CATS.mp4',
+  'Plot in 60s - Erika.mp4',
+  'The Challenge and Significance of Phantom of the Opera.mp4',
+]
+
+// GitHub repository information
+const GITHUB_USER = 'drmuzikbpn'
+const GITHUB_REPO = 'thetheatrepodcast'
+const GITHUB_BRANCH = 'main'
 
 export async function GET() {
   try {
-    const videoClipsDir = path.join(process.cwd(), 'public', 'video-clips')
-
-    // Check if directory exists
-    try {
-      await fs.access(videoClipsDir)
-    } catch {
-      return NextResponse.json({
-        clip: null,
-        error: 'No video clips directory found'
-      })
-    }
-
-    // Read all files from the video-clips directory
-    const files = await fs.readdir(videoClipsDir)
-
-    // Filter for video files (mp4, webm, mov)
-    const videoFiles = files.filter(file =>
-      /\.(mp4|webm|mov)$/i.test(file) && !file.startsWith('.')
-    )
-
-    if (videoFiles.length === 0) {
+    if (VIDEO_CLIPS.length === 0) {
       return NextResponse.json({
         clip: null,
         error: 'No video clips available'
@@ -32,12 +26,16 @@ export async function GET() {
     }
 
     // Select a random video
-    const randomIndex = Math.floor(Math.random() * videoFiles.length)
-    const selectedVideo = videoFiles[randomIndex]
+    const randomIndex = Math.floor(Math.random() * VIDEO_CLIPS.length)
+    const selectedVideo = VIDEO_CLIPS[randomIndex]
+
+    // Generate GitHub raw content URL for LFS files
+    // This URL points to the actual file via GitHub's CDN
+    const githubUrl = `https://media.githubusercontent.com/media/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/public/video-clips/${encodeURIComponent(selectedVideo)}`
 
     return NextResponse.json({
       clip: {
-        url: `/video-clips/${selectedVideo}`,
+        url: githubUrl,
         filename: selectedVideo
       }
     })
