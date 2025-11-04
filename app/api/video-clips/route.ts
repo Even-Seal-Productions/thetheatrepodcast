@@ -1,3 +1,7 @@
+// VIDEO FUNCTIONALITY TEMPORARILY DISABLED
+// This route is commented out to reduce Vercel deployment size
+
+/*
 import { NextResponse } from 'next/server'
 
 // List of video clips hosted on GitHub LFS
@@ -46,4 +50,10 @@ export async function GET() {
       error: 'Failed to fetch video clip'
     }, { status: 500 })
   }
+}
+*/
+
+// Placeholder export to prevent build errors
+export async function GET() {
+  return new Response('Video functionality is currently disabled', { status: 503 })
 }

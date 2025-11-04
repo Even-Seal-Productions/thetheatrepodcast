@@ -1,21 +1,21 @@
 'use client'
 
-import { Play, Sparkles, Loader2 } from 'lucide-react'
+import { Play, Loader2 } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import { EpisodeSearch } from './EpisodeSearch'
 import { useAudioPlayer } from '@/components/audio/AudioPlayerProvider'
-import { VideoClipModal } from './VideoClipModal'
+// import { VideoClipModal } from './VideoClipModal'
 import useSWR from 'swr'
 import { Episode } from '@/lib/types'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
 
 export function Hero() {
   const { playEpisode, currentEpisode, isPlaying } = useAudioPlayer()
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
+  // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const { data, isLoading } = useSWR<{ episode: Episode | null }>(
     '/api/episodes?type=latest',
     fetcher,
@@ -42,6 +42,22 @@ export function Hero() {
     <section className="relative min-h-[80vh] flex items-center justify-center">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-b from-theatrical-950 via-theatrical-900 to-theatrical-950" />
+
+      {/* Logo behind text with light opacity */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] md:w-[800px] md:h-[800px] pointer-events-none">
+        <Image
+          src="/images/logo-transparent-simple.png"
+          alt=""
+          width={800}
+          height={800}
+          className="object-contain opacity-5"
+          style={{ width: '100%', height: '100%' }}
+          priority
+        />
+      </div>
+
+      {/* Spotlight effect behind text */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-spotlight-500/10 rounded-full blur-3xl animate-spotlight pointer-events-none" />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         {/* Main heading */}
@@ -101,38 +117,16 @@ export function Hero() {
             Listen Anywhere
           </Link>
         </div>
-
-        {/* Logo */}
-        <div className="mb-0 animate-fade-in relative pt-4 -mt-8" style={{ animationDelay: '0.35s' }}>
-          {/* Spotlight effect behind logo */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-spotlight-500/20 rounded-full blur-3xl animate-spotlight -z-10" />
-
-          <button
-            onClick={() => setIsVideoModalOpen(true)}
-            className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] mx-auto group cursor-pointer transition-transform hover:scale-105"
-            aria-label="Watch video clip"
-          >
-            <Image
-              src="/images/logo-transparent-simple.png"
-              alt="The Theatre Podcast"
-              width={500}
-              height={500}
-              className="object-contain"
-              style={{ width: 'auto', height: 'auto' }}
-              priority
-            />
-          </button>
-        </div>
       </div>
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-theatrical-950 to-transparent" />
 
-      {/* Video Clip Modal */}
-      <VideoClipModal
+      {/* Video Clip Modal - COMMENTED OUT */}
+      {/* <VideoClipModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
-      />
+      /> */}
     </section>
   )
 }

@@ -1,5 +1,8 @@
-import fs from 'fs'
-import path from 'path'
+// VIDEO FUNCTIONALITY TEMPORARILY DISABLED
+// This file is modified to return empty arrays to prevent filesystem reads during build
+
+// import fs from 'fs'
+// import path from 'path'
 
 export interface VideoClip {
   slug: string
@@ -10,6 +13,7 @@ export interface VideoClip {
   fileName: string
 }
 
+/*
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -17,8 +21,13 @@ function slugify(text: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
 }
+*/
 
 export async function getAllVideoClips(): Promise<VideoClip[]> {
+  // DISABLED: Return empty array to prevent filesystem reads
+  return []
+
+  /*
   const videoClipsDir = path.join(process.cwd(), 'public', 'video-clips')
 
   try {
@@ -47,9 +56,15 @@ export async function getAllVideoClips(): Promise<VideoClip[]> {
     console.error('Error reading video clips:', error)
     return []
   }
+  */
 }
 
 export async function getVideoClipBySlug(slug: string): Promise<VideoClip | null> {
+  // DISABLED: Return null to prevent filesystem reads
+  return null
+
+  /*
   const clips = await getAllVideoClips()
   return clips.find(clip => clip.slug === slug) || null
+  */
 }
