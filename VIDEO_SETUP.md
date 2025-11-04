@@ -2,21 +2,23 @@
 
 This document explains how video clips are configured for The Theatre Podcast website.
 
-## Current Setup: Git LFS
+## Current Setup: Git LFS + GitHub CDN
 
-Video clips are stored using **Git Large File Storage (LFS)** to keep the repository size manageable while still keeping videos in version control.
+Video clips are stored using **Git Large File Storage (LFS)** and served directly from **GitHub's media CDN** - they are NOT bundled in the Vercel deployment.
 
 ### Configuration
 
 - **Tracked files**: `public/video-clips/*.mp4`
 - **LFS config**: `.gitattributes`
 - **Storage**: GitHub LFS
+- **Delivery**: GitHub's media CDN (`media.githubusercontent.com`)
 - **Cost**: FREE for up to 1GB storage + 1GB bandwidth/month
 
 ### Current Usage
 
 - **6 video clips** uploaded (~436 MB)
 - Well within free tier limits
+- Videos stream directly from GitHub, not from Vercel
 
 ---
 
@@ -24,15 +26,14 @@ Video clips are stored using **Git Large File Storage (LFS)** to keep the reposi
 
 ### How It Works
 
-The `vercel.json` file is configured to pull LFS files during build:
+Videos are **NOT included** in the Vercel deployment to keep function sizes small (<300MB limit).
 
-```json
-{
-  "buildCommand": "git lfs pull && npm run build"
-}
-```
-
-This ensures that video files are available in the deployed version on Vercel.
+Instead:
+1. Videos are stored in GitHub LFS
+2. API route (`app/api/video-clips/route.ts`) generates GitHub CDN URLs
+3. Videos stream directly from `https://media.githubusercontent.com/media/...`
+4. Zero bandwidth cost on Vercel
+5. Faster deployments (no large files to upload)
 
 ### First-Time Setup (Already Done)
 
@@ -59,26 +60,39 @@ git add public/video-clips/*.mp4
 
 Git LFS will automatically track and handle these files. No output is normal!
 
-### Step 3: Verify LFS is tracking
+### Step 3: Update the video list in code
+Edit `app/api/video-clips/route.ts` and add your new video to the `VIDEO_CLIPS` array:
+
+```typescript
+const VIDEO_CLIPS = [
+  'Audition Gone Wrong- A Lesson in Resilience.mp4',
+  'Dream Casting LSOH.mp4',
+  // ... other videos
+  'Your New Video.mp4',  // Add your video filename here
+]
+```
+
+### Step 4: Verify LFS is tracking
 ```bash
 git lfs ls-files
 ```
 
 You should see your new files listed with hash IDs and asterisks (`*`).
 
-### Step 4: Commit and push
+### Step 5: Commit and push
 ```bash
+git add app/api/video-clips/route.ts
 git commit -m "Add new video clips"
 git push origin main
 ```
 
 The files will upload to GitHub LFS (you'll see "Uploading LFS objects" progress).
 
-### Step 5: Deploy
+### Step 6: Deploy
 Vercel will automatically:
 1. Detect the push to `main` or `dev` branch
-2. Run `git lfs pull` during build
-3. Deploy with videos included
+2. Deploy instantly (no large files to process!)
+3. Videos stream from GitHub CDN
 
 ---
 
@@ -87,15 +101,12 @@ Vercel will automatically:
 ### Videos not playing on Vercel
 
 **Problem**: Videos play locally but not on deployed site
-**Solution**: Ensure `vercel.json` has the correct build command
+**Solution**:
 
-```json
-{
-  "buildCommand": "git lfs pull && npm run build"
-}
-```
-
-Then redeploy from Vercel dashboard or push a new commit.
+1. Check that the video filename is in the `VIDEO_CLIPS` array in `app/api/video-clips/route.ts`
+2. Ensure the video was pushed to GitHub LFS (check `git lfs ls-files`)
+3. Verify the GitHub URL is accessible: `https://media.githubusercontent.com/media/drmuzikbpn/thetheatrepodcast/main/public/video-clips/[filename].mp4`
+4. Redeploy from Vercel dashboard
 
 ### Share links showing relative paths
 
