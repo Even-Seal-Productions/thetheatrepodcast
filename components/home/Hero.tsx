@@ -44,7 +44,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-theatrical-950 via-theatrical-900 to-theatrical-950" />
 
       {/* Logo behind text with light opacity */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] md:w-[800px] md:h-[800px] pointer-events-none">
+      <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[700px] sm:h-[700px] md:w-[800px] md:h-[800px] pointer-events-none">
         <Image
           src="/images/logo-transparent-simple.png"
           alt=""
@@ -57,7 +57,7 @@ export function Hero() {
       </div>
 
       {/* Spotlight effect behind text */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-spotlight-500/10 rounded-full blur-3xl animate-spotlight pointer-events-none" />
+      <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-spotlight-500/10 rounded-full blur-3xl animate-spotlight pointer-events-none" />
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         {/* Main heading */}
