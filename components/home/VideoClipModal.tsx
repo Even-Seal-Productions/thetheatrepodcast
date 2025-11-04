@@ -75,7 +75,9 @@ export function VideoClipModal({ isOpen, onClose }: VideoClipModalProps) {
   const handleCopyLink = async () => {
     if (videoUrl) {
       try {
-        await navigator.clipboard.writeText(videoUrl)
+        // Create full URL with protocol and domain
+        const fullUrl = `${window.location.origin}${videoUrl}`
+        await navigator.clipboard.writeText(fullUrl)
         setCopied(true)
         setTimeout(() => setCopied(false), 2000)
       } catch (err) {
@@ -86,16 +88,18 @@ export function VideoClipModal({ isOpen, onClose }: VideoClipModalProps) {
 
   const handleShare = (platform: string) => {
     if (!videoUrl) return
-    
-    const shareUrl = encodeURIComponent(videoUrl)
+
+    // Create full URL with protocol and domain
+    const fullUrl = `${window.location.origin}${videoUrl}`
+    const shareUrl = encodeURIComponent(fullUrl)
     const shareText = encodeURIComponent('Check out this clip from The Theatre Podcast!')
-    
+
     const urls: Record<string, string> = {
       twitter: `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
       linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
     }
-    
+
     if (urls[platform]) {
       window.open(urls[platform], '_blank', 'width=600,height=400')
     }
