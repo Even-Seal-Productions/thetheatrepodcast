@@ -1,0 +1,6 @@
+# Production robots.txt - Allow all indexing
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://thetheatrepodcast.com/sitemap.xml
