@@ -41,12 +41,21 @@ export const metadata: Metadata = {
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
     siteName: SITE_CONFIG.name,
+    images: [
+      {
+        url: '/images/logo-transparent-simple.png',
+        width: 2584,
+        height: 1315,
+        alt: SITE_CONFIG.name,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
     creator: '@theatrepodcast',
+    images: ['/images/logo-transparent-simple.png'],
   },
   robots: {
     index: true,
