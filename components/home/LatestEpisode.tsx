@@ -106,18 +106,10 @@ export function LatestEpisode() {
               </div>
 
               <Link href={`/episodes/${latestEpisode.slug}`} className="group/title">
-                <h3 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4 group-hover/title:text-spotlight-400 transition-colors">
+                <h3 className="font-display text-2xl sm:text-3xl font-bold text-white mb-6 group-hover/title:text-spotlight-400 transition-colors">
                   {latestEpisode.title}
                 </h3>
               </Link>
-
-              {latestEpisode.guests.length > 0 && (
-                <p className="text-sm sm:text-base text-gray-300 mb-4">
-                  Featuring <span className="text-spotlight-400 font-semibold">
-                    {latestEpisode.guests.map(g => g.name).join(', ')}
-                  </span>
-                </p>
-              )}
 
               <Link href={`/episodes/${latestEpisode.slug}`} className="group/desc block">
                 <p className="text-sm sm:text-base text-gray-400 mb-6 line-clamp-3 sm:line-clamp-4 group-hover/desc:text-gray-300 transition-colors">
@@ -125,22 +117,24 @@ export function LatestEpisode() {
                 </p>
               </Link>
 
-              <button
-                onClick={() => playEpisode(latestEpisode)}
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                {isThisEpisodePlaying ? (
-                  <>
-                    <Pause className="h-5 w-5 fill-white" />
-                    <span>Pause Episode</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="h-5 w-5 fill-white" />
-                    <span>Play Episode</span>
-                  </>
-                )}
-              </button>
+              <div className="flex justify-center sm:justify-start">
+                <button
+                  onClick={() => playEpisode(latestEpisode)}
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  {isThisEpisodePlaying ? (
+                    <>
+                      <Pause className="h-5 w-5 fill-white" />
+                      <span>Pause Episode</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="h-5 w-5 fill-white" />
+                      <span>Play Episode</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>

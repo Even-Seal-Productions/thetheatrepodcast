@@ -88,11 +88,11 @@ export function Hero() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-row gap-2 sm:gap-4 justify-center items-center animate-slide-up mb-12" style={{ animationDelay: '0.3s' }}>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center animate-slide-up mb-12 w-full max-w-md mx-auto sm:max-w-none" style={{ animationDelay: '0.3s' }}>
           <button
             onClick={handlePlayLatest}
             disabled={isLoading || !latestEpisode}
-            className="group relative inline-flex items-center gap-2 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group relative inline-flex items-center justify-center gap-2 btn-primary disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
           >
             {isLoading ? (
               <Loader2 className="h-5 w-5 animate-spin" />
@@ -112,7 +112,7 @@ export function Hero() {
 
           <Link
             href="/listen"
-            className="btn-secondary"
+            className="btn-secondary inline-flex items-center justify-center w-full sm:w-auto"
           >
             Listen Anywhere
           </Link>

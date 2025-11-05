@@ -44,12 +44,9 @@ export function RecentCollections() {
                 )}
               </div>
               <div className="p-3 sm:p-4">
-                <h3 className="font-display text-base sm:text-lg font-bold text-white mb-2 group-hover:text-spotlight-400 transition-colors line-clamp-2">
+                <h3 className="font-display text-base sm:text-lg font-bold text-white mb-3 group-hover:text-spotlight-400 transition-colors line-clamp-2">
                   {collection.title}
                 </h3>
-                <p className="text-gray-400 text-xs sm:text-sm line-clamp-2 mb-3">
-                  {collection.description}
-                </p>
                 <div className="flex items-center gap-2 text-spotlight-400 text-xs sm:text-sm font-semibold">
                   <span>{collection.episodeIds.length} Episodes</span>
                 </div>

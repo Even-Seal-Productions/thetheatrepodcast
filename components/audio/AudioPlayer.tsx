@@ -86,6 +86,18 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
     }
   }, [isPlaying, audioRef])
 
+  // Handle episode changes - load and play new audio
+  useEffect(() => {
+    if (audioRef.current && episode.audioUrl) {
+      audioRef.current.load()
+      if (isPlaying) {
+        audioRef.current.play().catch((error) => {
+          console.error('Error playing audio:', error)
+        })
+      }
+    }
+  }, [episode.audioUrl, episode.id])
+
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value)
     setCurrentTime(time)
@@ -181,28 +193,8 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                   </h4>
                 </div>
               </div>
-              <div className="flex items-center gap-1 flex-shrink-0">
-                <Tooltip text="Expand player">
-                  <button
-                    onClick={() => setIsMinimized(false)}
-                    className="p-1 hover:bg-theatrical-800 rounded transition-colors"
-                    aria-label="Expand player"
-                  >
-                    <Maximize2 className="h-4 w-4 text-gray-400" />
-                  </button>
-                </Tooltip>
-                <Tooltip text="Close player">
-                  <button
-                    onClick={onClose}
-                    className="p-1 hover:bg-theatrical-800 rounded transition-colors"
-                    aria-label="Close player"
-                  >
-                    <X className="h-4 w-4 text-gray-400" />
-                  </button>
-                </Tooltip>
-              </div>
             </div>
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center justify-center gap-2">
               <Tooltip text="Rewind 15 seconds">
                 <button
                   onClick={() => skip(-15)}
@@ -240,20 +232,55 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                   <span className="absolute inset-0 flex items-center justify-center text-[8px] font-bold mt-0.5">30</span>
                 </button>
               </Tooltip>
-            </div>
-            <div className="mt-2">
-              <input
-                type="range"
-                min="0"
-                max={duration || 0}
-                value={currentTime}
-                onChange={handleSeek}
-                className="w-full h-1 bg-theatrical-700 rounded-lg appearance-none cursor-pointer accent-spotlight-500"
-              />
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
-                <span>{formatDuration(Math.floor(currentTime))}</span>
-                <span>{formatDuration(Math.floor(duration))}</span>
+
+              {/* Playback Speed */}
+              <div className="relative">
+                <Tooltip text="Playback speed">
+                  <button
+                    onClick={() => setShowSpeedMenu(!showSpeedMenu)}
+                    className="flex items-center gap-0.5 px-2 py-1 hover:bg-theatrical-800 rounded-lg transition-colors text-xs"
+                    aria-label="Playback speed"
+                  >
+                    <Gauge className="h-3 w-3" />
+                    <span>{playbackRate}x</span>
+                  </button>
+                </Tooltip>
+
+                {showSpeedMenu && (
+                  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-theatrical-800 border border-theatrical-700 rounded-lg shadow-xl overflow-hidden z-50">
+                    {speeds.map((speed) => (
+                      <button
+                        key={speed}
+                        onClick={() => changeSpeed(speed)}
+                        className={`block w-full px-3 py-1.5 text-xs text-left hover:bg-theatrical-700 transition-colors ${
+                          speed === playbackRate ? 'bg-theatrical-700 text-spotlight-400' : ''
+                        }`}
+                      >
+                        {speed}x
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
+
+              <Tooltip text="Expand player">
+                <button
+                  onClick={() => setIsMinimized(false)}
+                  className="p-1 hover:bg-theatrical-800 rounded transition-colors"
+                  aria-label="Expand player"
+                >
+                  <Maximize2 className="h-4 w-4 text-gray-400" />
+                </button>
+              </Tooltip>
+              <Tooltip text="Close player">
+                <button
+                  onClick={onClose}
+                  className="p-1 hover:bg-theatrical-800 rounded transition-colors"
+                  aria-label="Close player"
+                >
+                  <X className="h-4 w-4 text-gray-400" />
+                </button>
+              </Tooltip>
             </div>
           </div>
         </div>
@@ -293,19 +320,16 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                 <h4 className="font-semibold text-white truncate text-sm">
                   {episode.title}
                 </h4>
-                <p className="text-xs text-gray-400 truncate">
-                  {episode.guests.map(g => g.name).join(', ')}
-                </p>
               </div>
             </div>
 
             {/* Centered Controls - Center column */}
-            <div className="relative flex items-center justify-center order-1 md:order-2">
-              {/* Rewind button - positioned to the left */}
+            <div className="relative flex items-center justify-center gap-2 order-1 md:order-2">
+              {/* Rewind button */}
               <Tooltip text="Rewind 15 seconds">
                 <button
                   onClick={() => skip(-15)}
-                  className="p-2 hover:bg-theatrical-800 rounded-full transition-colors relative mr-2"
+                  className="p-2 hover:bg-theatrical-800 rounded-full transition-colors relative"
                   aria-label="Rewind 15 seconds"
                 >
                   <RotateCcw className="h-5 w-5" />
@@ -313,7 +337,7 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                 </button>
               </Tooltip>
 
-              {/* Play/Pause button - this is the center point */}
+              {/* Play/Pause button - always centered */}
               <Tooltip text={isLoading ? 'Loading' : isPlaying ? 'Pause' : 'Play'}>
                 <button
                   onClick={onPlayPause}
@@ -330,11 +354,11 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                 </button>
               </Tooltip>
 
-              {/* Skip forward button - positioned to the right */}
+              {/* Skip forward button */}
               <Tooltip text="Skip forward 30 seconds">
                 <button
                   onClick={() => skip(30)}
-                  className="p-2 hover:bg-theatrical-800 rounded-full transition-colors relative ml-2"
+                  className="p-2 hover:bg-theatrical-800 rounded-full transition-colors relative"
                   aria-label="Skip forward 30 seconds"
                 >
                   <RotateCw className="h-5 w-5" />
@@ -342,8 +366,8 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                 </button>
               </Tooltip>
 
-              {/* Playback Speed - positioned to the right of skip button */}
-              <div className="relative hidden lg:block ml-2">
+              {/* Playback Speed - positioned to the right of skip button on desktop */}
+              <div className="relative hidden lg:block">
                 <Tooltip text="Playback speed">
                   <button
                     onClick={() => setShowSpeedMenu(!showSpeedMenu)}
@@ -375,6 +399,59 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
 
             {/* Volume & Actions - Right column */}
             <div className="flex items-center gap-2 justify-end order-3 md:order-3">
+              {/* Mobile controls - Playback speed, Minimize, Close */}
+              <div className="flex md:hidden items-center gap-1">
+                {/* Playback Speed - mobile only */}
+                <div className="relative">
+                  <Tooltip text="Playback speed">
+                    <button
+                      onClick={() => setShowSpeedMenu(!showSpeedMenu)}
+                      className="flex items-center gap-1 px-2 py-1 hover:bg-theatrical-800 rounded-lg transition-colors text-xs"
+                      aria-label="Playback speed"
+                    >
+                      <Gauge className="h-4 w-4" />
+                      <span>{playbackRate}x</span>
+                    </button>
+                  </Tooltip>
+
+                  {showSpeedMenu && (
+                    <div className="absolute bottom-full mb-2 right-0 bg-theatrical-800 border border-theatrical-700 rounded-lg shadow-xl overflow-hidden z-50">
+                      {speeds.map((speed) => (
+                        <button
+                          key={speed}
+                          onClick={() => changeSpeed(speed)}
+                          className={`block w-full px-3 py-1.5 text-xs text-left hover:bg-theatrical-700 transition-colors ${
+                            speed === playbackRate ? 'bg-theatrical-700 text-spotlight-400' : ''
+                          }`}
+                        >
+                          {speed}x
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <Tooltip text="Minimize player">
+                  <button
+                    onClick={() => setIsMinimized(true)}
+                    className="p-2 hover:bg-theatrical-800 rounded transition-colors"
+                    aria-label="Minimize player"
+                  >
+                    <Minimize2 className="h-4 w-4 text-gray-400" />
+                  </button>
+                </Tooltip>
+                <Tooltip text="Close player">
+                  <button
+                    onClick={onClose}
+                    className="p-2 hover:bg-theatrical-800 rounded transition-colors"
+                    aria-label="Close player"
+                  >
+                    <X className="h-4 w-4 text-gray-400" />
+                  </button>
+                </Tooltip>
+              </div>
+
+              {/* Desktop controls - Volume, Minimize, Close */}
               <div className="hidden md:flex items-center gap-2">
                 <Tooltip text={isMuted || volume === 0 ? 'Unmute' : 'Mute'}>
                   <button
@@ -400,8 +477,7 @@ export function AudioPlayer({ episode, isPlaying, isLoading, audioRef, onPlayPau
                 />
               </div>
 
-              {/* Minimize/Close buttons */}
-              <div className="flex items-center gap-1">
+              <div className="hidden md:flex items-center gap-1">
                 <Tooltip text="Minimize player">
                   <button
                     onClick={() => setIsMinimized(true)}

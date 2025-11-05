@@ -323,3 +323,4 @@ If you need to launch quickly, prioritize:
 
 Everything else can be added iteratively post-launch.
 - The format of my episode titles is always #XXX - GUEST NAME: TITLE unless it is a BONUS episode (which can be ignored by the system parsing guests.
+- Do not push to github without my explicit instructions

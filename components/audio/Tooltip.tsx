@@ -68,9 +68,9 @@ export function Tooltip({ children, text, delay = 1000 }: TooltipProps) {
     >
       {children}
       {isVisible && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-theatrical-800 text-white text-xs rounded shadow-lg whitespace-nowrap border border-theatrical-700 pointer-events-none z-50">
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-theatrical-900 text-white text-xs rounded-md shadow-xl whitespace-nowrap border border-theatrical-700/50 pointer-events-none z-50">
           {text}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-theatrical-800" />
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-theatrical-900" />
         </div>
       )}
     </div>

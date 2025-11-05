@@ -25,7 +25,7 @@ export function RecentEpisodes() {
         <div className="text-center mb-12">
           <h2 className="section-title">Recent Episodes</h2>
           <p className="text-gray-400 text-lg">
-            {dataLoading ? 'Loading...' : 'Catch up the our latest conversations'}
+            {dataLoading ? 'Loading...' : 'Catch up the the latest conversations'}
           </p>
         </div>
 
@@ -87,16 +87,10 @@ export function RecentEpisodes() {
 
                 {/* Episode Info - Click to navigate */}
                 <Link href={`/episodes/${episode.slug}`}>
-                  <h3 className="font-display text-base sm:text-lg font-bold text-white mb-1 hover:text-spotlight-400 transition-colors line-clamp-2 cursor-pointer">
+                  <h3 className="font-display text-base sm:text-lg font-bold text-white mb-3 hover:text-spotlight-400 transition-colors line-clamp-2 cursor-pointer">
                     {episode.title}
                   </h3>
                 </Link>
-
-                {episode.guests.length > 0 && (
-                  <p className="text-spotlight-400 text-xs sm:text-sm font-semibold mb-2">
-                    {episode.guests.map(g => g.name).join(', ')}
-                  </p>
-                )}
 
                 <div className="flex items-center gap-3 text-xs text-gray-400 mb-3">
                   <span className="flex items-center gap-1">

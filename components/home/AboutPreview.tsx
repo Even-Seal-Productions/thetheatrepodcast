@@ -54,15 +54,15 @@ export function AboutPreview() {
             <div className="text-center">
               {/* Host Image */}
               <div className="mb-6 sm:mb-8">
-                <div className="relative w-32 h-32 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden border-4 border-spotlight-500">
+                <Link href="/about" className="block w-32 h-32 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden border-4 border-spotlight-500 cursor-pointer hover:border-spotlight-400 transition-colors group relative">
                   <Image
                     src="/images/alan-seales.jpg"
                     alt="Alan Seales"
                     width={192}
                     height={192}
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                </div>
+                </Link>
               </div>
 
               <p className="text-gray-300 text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">

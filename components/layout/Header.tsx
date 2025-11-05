@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
-import { NAV_ITEMS } from '@/lib/constants'
+import { NAV_ITEMS, MOBILE_NAV_ITEMS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 export function Header() {
@@ -70,11 +70,11 @@ export function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-theatrical-800">
             <div className="space-y-1">
-              {NAV_ITEMS.map((item) => (
+              {MOBILE_NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-spotlight-400 hover:bg-theatrical-800/50 rounded-md transition-all"
+                  className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-spotlight-400 hover:bg-theatrical-800/50 rounded-md transition-all text-right"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.label}

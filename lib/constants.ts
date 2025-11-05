@@ -65,13 +65,27 @@ export const SITE_CONFIG = {
   },
 }
 
-export const NAV_ITEMS = [
+// Desktop navbar order: Home, Episodes, Collections, For Publicists, Listen Anywhere, Contact, About
+export const DESKTOP_NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'Episodes', href: '/episodes' },
   { label: 'Collections', href: '/collections' },
-  // { label: 'Featured Guests', href: '/guests' },
-  { label: 'About', href: '/about' },
   { label: 'For Publicists', href: '/booking' },
   { label: 'Listen Anywhere', href: '/listen' },
   { label: 'Contact', href: '/contact' },
+  { label: 'About', href: '/about' },
 ]
+
+// Mobile nav order: Home, About, Contact, Episodes, Collections, Listen Anywhere, For Publicists
+export const MOBILE_NAV_ITEMS = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Episodes', href: '/episodes' },
+  { label: 'Collections', href: '/collections' },
+  { label: 'Listen Anywhere', href: '/listen' },
+  { label: 'For Publicists', href: '/booking' },
+]
+
+// Keep NAV_ITEMS for backward compatibility
+export const NAV_ITEMS = DESKTOP_NAV_ITEMS

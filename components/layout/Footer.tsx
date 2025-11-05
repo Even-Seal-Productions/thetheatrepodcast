@@ -75,46 +75,49 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-white mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {NAV_ITEMS.slice(0, 4).map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-gray-400 hover:text-spotlight-400 transition-colors text-sm"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links - 2 columns on mobile, part of 4-column grid on desktop */}
+          <div className="grid grid-cols-2 gap-8 col-span-1 md:col-span-2 md:grid-cols-2">
+            {/* Quick Links */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                {NAV_ITEMS.slice(0, 4).map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-gray-400 hover:text-spotlight-400 transition-colors text-sm"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* More Links */}
-          <div>
-            <h4 className="font-semibold text-white mb-4">More</h4>
-            <ul className="space-y-2">
-              {NAV_ITEMS.slice(4).map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-gray-400 hover:text-spotlight-400 transition-colors text-sm"
+            {/* More Links */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">More</h4>
+              <ul className="space-y-2">
+                {NAV_ITEMS.slice(4).map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-gray-400 hover:text-spotlight-400 transition-colors text-sm"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <button
+                    onClick={() => setIsNewsletterModalOpen(true)}
+                    className="text-gray-400 hover:text-spotlight-400 transition-colors text-sm text-left"
                   >
-                    {item.label}
-                  </Link>
+                    Newsletter
+                  </button>
                 </li>
-              ))}
-              <li>
-                <button
-                  onClick={() => setIsNewsletterModalOpen(true)}
-                  className="text-gray-400 hover:text-spotlight-400 transition-colors text-sm text-left"
-                >
-                  Newsletter
-                </button>
-              </li>
-            </ul>
+              </ul>
+            </div>
           </div>
         </div>
 
