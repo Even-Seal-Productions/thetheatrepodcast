@@ -19,9 +19,15 @@
     @apply border-theatrical-800;
   }
 
-  body {
+  html, body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  * {
+    max-width: 100%;
   }
 }
 

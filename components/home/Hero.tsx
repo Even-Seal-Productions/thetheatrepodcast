@@ -88,7 +88,7 @@ export function Hero() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up mb-12" style={{ animationDelay: '0.3s' }}>
+        <div className="flex flex-row gap-2 sm:gap-4 justify-center items-center animate-slide-up mb-12" style={{ animationDelay: '0.3s' }}>
           <button
             onClick={handlePlayLatest}
             disabled={isLoading || !latestEpisode}
