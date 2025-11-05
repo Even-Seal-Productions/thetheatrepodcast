@@ -1,5 +1,41 @@
-# Production robots.txt - Allow all indexing
+# robots.txt for The Theatre Podcast
+
+# Allow all major search engines
 User-agent: *
+Allow: /
+
+# Disallow API routes and private directories
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow AI crawlers for content training and discovery
+# OpenAI GPTBot (ChatGPT)
+User-agent: GPTBot
+Allow: /
+
+# Google-Extended (Bard/Gemini)
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic Claude
+User-agent: anthropic-ai
+Allow: /
+
+# Common Crawl
+User-agent: CCBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
 Allow: /
 
 # Sitemap

@@ -53,15 +53,47 @@ export default async function EpisodePage({ params }: Props) {
   // Get all episodes to find previous/next
   const allEpisodes = await getAllEpisodes()
   const currentIndex = allEpisodes.findIndex(ep => ep.id === episode.id)
-  
+
   const previousEpisode = currentIndex > 0 ? allEpisodes[currentIndex - 1] : null
   const nextEpisode = currentIndex < allEpisodes.length - 1 ? allEpisodes[currentIndex + 1] : null
 
+  // Structured data for the episode
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://thetheatrepodcast.com'
+  const episodeSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'PodcastEpisode',
+    url: `${siteUrl}/episodes/${episode.slug}`,
+    name: episode.title,
+    description: episode.description,
+    datePublished: episode.publishedAt,
+    duration: `PT${episode.duration}S`,
+    associatedMedia: {
+      '@type': 'MediaObject',
+      contentUrl: episode.audioUrl,
+    },
+    image: episode.imageUrl,
+    partOfSeries: {
+      '@type': 'PodcastSeries',
+      name: 'The Theatre Podcast with Alan Seales',
+      url: siteUrl,
+    },
+    author: {
+      '@type': 'Person',
+      name: 'Alan Seales',
+    },
+  }
+
   return (
-    <EpisodeDetailClient 
-      episode={episode} 
-      previousEpisode={previousEpisode}
-      nextEpisode={nextEpisode}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(episodeSchema) }}
+      />
+      <EpisodeDetailClient
+        episode={episode}
+        previousEpisode={previousEpisode}
+        nextEpisode={nextEpisode}
+      />
+    </>
   )
 }

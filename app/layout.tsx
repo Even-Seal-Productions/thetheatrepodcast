@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer'
 import { AudioPlayerProvider } from '@/components/audio/AudioPlayerProvider'
 import { ScrollRestoration } from '@/components/layout/ScrollRestoration'
 import { CookieConsent } from '@/components/common/CookieConsent'
+import { StructuredData } from '@/components/common/StructuredData'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const montserrat = Montserrat({
@@ -71,6 +72,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
+        {/* Structured Data for SEO and AI/LLMs */}
+        <StructuredData />
+
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
