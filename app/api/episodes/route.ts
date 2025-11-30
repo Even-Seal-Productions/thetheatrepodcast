@@ -33,10 +33,17 @@ export async function GET(request: Request) {
 
     // Get all episodes with pagination (default)
     const allEpisodes = await getAllEpisodes()
+    const sort = searchParams.get('sort') // 'oldest' for oldest first, default is newest first
+
+    // Sort episodes if needed
+    const sortedEpisodes = sort === 'oldest'
+      ? [...allEpisodes].reverse()
+      : allEpisodes
+
     const episodeOffset = offset ? parseInt(offset) : 0
     const episodeLimit = limit ? parseInt(limit) : 20
-    const paginatedEpisodes = allEpisodes.slice(episodeOffset, episodeOffset + episodeLimit)
-    const hasMore = episodeOffset + episodeLimit < allEpisodes.length
+    const paginatedEpisodes = sortedEpisodes.slice(episodeOffset, episodeOffset + episodeLimit)
+    const hasMore = episodeOffset + episodeLimit < sortedEpisodes.length
 
     return NextResponse.json({
       episodes: paginatedEpisodes,

@@ -17,7 +17,9 @@ function EpisodesContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const initialSearch = searchParams.get('search') || ''
+  const initialSort = searchParams.get('sort') || 'newest'
   const [searchQuery, setSearchQuery] = useState(initialSearch)
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>(initialSort as 'newest' | 'oldest')
   const [episodes, setEpisodes] = useState<Episode[]>([])
   const [offset, setOffset] = useState(0)
   const [hasMore, setHasMore] = useState(true)
@@ -28,9 +30,10 @@ function EpisodesContent() {
   const limit = 20
 
   // Fetch episodes or search results
+  const sortParam = sortOrder === 'oldest' ? '&sort=oldest' : ''
   const apiUrl = searchQuery.trim()
     ? `/api/episodes?query=${encodeURIComponent(searchQuery)}`
-    : `/api/episodes?limit=${limit}&offset=${offset}`
+    : `/api/episodes?limit=${limit}&offset=${offset}${sortParam}`
 
   const { data, error, isLoading } = useSWR<{ episodes: Episode[], hasMore?: boolean }>(
     apiUrl,
@@ -47,7 +50,9 @@ function EpisodesContent() {
   // Reset state when search params change
   useEffect(() => {
     const urlSearch = searchParams.get('search') || ''
+    const urlSort = searchParams.get('sort') || 'newest'
     setSearchQuery(urlSearch)
+    setSortOrder(urlSort as 'newest' | 'oldest')
     setOffset(0)
     setEpisodes([])
     setHasMore(true)
@@ -77,6 +82,16 @@ function EpisodesContent() {
   // Handle search submission
   const handleSearch = (query: string) => {
     router.push(`/episodes?search=${encodeURIComponent(query)}`)
+  }
+
+  // Handle sort order change
+  const handleSortChange = (newSort: 'newest' | 'oldest') => {
+    if (newSort !== sortOrder) {
+      const params = new URLSearchParams()
+      if (searchQuery) params.set('search', searchQuery)
+      if (newSort === 'oldest') params.set('sort', 'oldest')
+      router.push(`/episodes${params.toString() ? `?${params.toString()}` : ''}`)
+    }
   }
 
   // Infinite scroll observer
@@ -121,11 +136,37 @@ function EpisodesContent() {
         </div>
 
         {/* Search */}
-        <div className="max-w-4xl mx-auto mb-12">
+        <div className="max-w-4xl mx-auto mb-8">
           <AutocompleteSearch
             placeholder="Search by guest name, episode title, or keyword..."
             onSubmit={handleSearch}
           />
+        </div>
+
+        {/* Sort Toggle */}
+        <div className="max-w-5xl mx-auto mb-6 flex justify-end">
+          <div className="inline-flex items-center gap-2 bg-theatrical-800/50 border border-theatrical-700 rounded-lg p-1">
+            <button
+              onClick={() => handleSortChange('newest')}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                sortOrder === 'newest'
+                  ? 'bg-spotlight-500 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-theatrical-700'
+              }`}
+            >
+              Newest First
+            </button>
+            <button
+              onClick={() => handleSortChange('oldest')}
+              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                sortOrder === 'oldest'
+                  ? 'bg-spotlight-500 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-theatrical-700'
+              }`}
+            >
+              Oldest First
+            </button>
+          </div>
         </div>
 
         {/* Episodes Grid */}
