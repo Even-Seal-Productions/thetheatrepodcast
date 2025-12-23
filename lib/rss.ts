@@ -162,6 +162,7 @@ export async function getAllEpisodes(): Promise<Episode[]> {
 
   if (!feed.items) return []
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const episodes = feed.items.map((item: any, index: number) => {
     const guests = extractGuestsFromTitle(item.title || '')
     const episodeNumber = item.episodeNumber ? parseInt(item.episodeNumber) : undefined

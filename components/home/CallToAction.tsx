@@ -19,7 +19,7 @@ export function CallToAction() {
                 For Publicists
               </h3>
               <p className="text-sm sm:text-base text-gray-400 mb-6">
-                Book your clients on one of NYC's premier arts & entertainment podcasts. 
+                Book your clients on one of NYC&apos;s premier arts &amp; entertainment podcasts. 
                 Learn about our format, audience, and easy scheduling process.
               </p>
               <Link
@@ -41,7 +41,7 @@ export function CallToAction() {
               </h3>
               <p className="text-sm sm:text-base text-gray-400 mb-6">
                 Have questions, feedback, or want to collaborate? 
-                We'd love to hear from you. Reach out and let's connect.
+                We&apos;d love to hear from you. Reach out and let&apos;s connect.
               </p>
               <Link
                 href="/contact"

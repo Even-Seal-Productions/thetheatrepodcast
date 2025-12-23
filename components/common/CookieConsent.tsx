@@ -30,7 +30,7 @@ export function CookieConsent() {
       try {
         const saved = JSON.parse(consent)
         setPreferences(saved)
-      } catch (e) {
+      } catch {
         // Invalid data, show banner
         setShowBanner(true)
       }
@@ -43,7 +43,7 @@ export function CookieConsent() {
 
     // Make preferences available globally
     if (typeof window !== 'undefined') {
-      (window as any).cookiePreferences = prefs
+      (window as unknown as { cookiePreferences: CookiePreferences }).cookiePreferences = prefs
     }
 
     setShowBanner(false)
@@ -97,7 +97,7 @@ export function CookieConsent() {
                   </h3>
                   <p className="text-gray-300 text-sm mb-4">
                     We use cookies to enhance your browsing experience, remember your playback positions,
-                    and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.{' '}
+                    and analyze our traffic. By clicking &quot;Accept All&quot;, you consent to our use of cookies.{' '}
                     <Link href="/privacy" className="text-spotlight-400 hover:text-spotlight-300 underline">
                       Privacy Policy
                     </Link>
@@ -238,7 +238,7 @@ export function areCookiesAllowed(type: 'necessary' | 'functional' | 'analytics'
   try {
     const preferences = JSON.parse(consent)
     return preferences[type] === true
-  } catch (e) {
+  } catch {
     return type === 'necessary'
   }
 }

@@ -1,5 +1,4 @@
-import { Briefcase, Users, Mic2, Calendar, CheckCircle, Mail } from 'lucide-react'
-import { SITE_CONFIG } from '@/lib/constants'
+import { Mic2, Calendar, CheckCircle, Mail } from 'lucide-react'
 import Link from 'next/link'
 
 export default function BookingPage() {
@@ -9,7 +8,7 @@ export default function BookingPage() {
         <div className="text-center mb-16">
           <h1 className="section-title">Book Your Client</h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Position your clients on one of NYC's premier arts & entertainment podcasts
+            Position your clients on one of NYC&apos;s premier arts &amp; entertainment podcasts
           </p>
         </div>
 

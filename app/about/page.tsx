@@ -1,4 +1,4 @@
-import { Mic2, MapPin, Star, Users, Sparkles, Heart } from 'lucide-react'
+import { Mic2, MapPin, Sparkles, Heart } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/constants'
 import Link from 'next/link'
 

@@ -32,7 +32,7 @@ export function NewsletterSignup() {
       } else {
         setError(data.message || 'Failed to subscribe. Please try again.')
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again later.')
     } finally {
       setLoading(false)

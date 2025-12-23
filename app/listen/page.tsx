@@ -5,7 +5,7 @@ import { NewsletterSignup } from '@/components/common/NewsletterSignup'
 
 export default function ListenPage() {
   const getIcon = (iconName: string) => {
-    const iconMap: { [key: string]: any } = {
+    const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
       apple: Icons.Smartphone,
       spotify: Icons.Music,
       youtube: Icons.Youtube,

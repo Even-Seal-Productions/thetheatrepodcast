@@ -59,6 +59,7 @@ export async function getAllVideoClips(): Promise<VideoClip[]> {
   */
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getVideoClipBySlug(slug: string): Promise<VideoClip | null> {
   // DISABLED: Return null to prevent filesystem reads
   return null

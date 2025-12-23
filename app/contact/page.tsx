@@ -3,9 +3,14 @@
 import { useState, useEffect } from 'react'
 import { Send, CheckCircle, AlertCircle } from 'lucide-react'
 
+interface ReCaptcha {
+  getResponse: () => string
+  reset: () => void
+}
+
 declare global {
   interface Window {
-    grecaptcha: any
+    grecaptcha: ReCaptcha | undefined
     onRecaptchaSuccess: () => void
   }
 }
@@ -20,7 +25,6 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
   const [isVerified, setIsVerified] = useState(false)
 
   useEffect(() => {
@@ -29,7 +33,6 @@ export default function ContactPage() {
     script.src = 'https://www.google.com/recaptcha/api.js'
     script.async = true
     script.defer = true
-    script.onload = () => setRecaptchaLoaded(true)
     document.body.appendChild(script)
 
     // Define callback for reCAPTCHA
@@ -94,7 +97,7 @@ export default function ContactPage() {
       } else {
         setError(data.message || 'Failed to send message. Please try again.')
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again later.')
     } finally {
       setLoading(false)
@@ -107,7 +110,7 @@ export default function ContactPage() {
         <div className="text-center mb-12">
           <h1 className="section-title">Get in Touch</h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Have questions, feedback, or want to collaborate? We'd love to hear from you
+            Have questions, feedback, or want to collaborate? We&apos;d love to hear from you
           </p>
         </div>
 
@@ -117,7 +120,7 @@ export default function ContactPage() {
               <div className="text-center py-12">
                 <CheckCircle className="h-16 w-16 text-spotlight-400 mx-auto mb-4" />
                 <h3 className="font-display text-2xl font-bold text-white mb-2">Message Sent!</h3>
-                <p className="text-gray-400">We'll get back to you as soon as possible.</p>
+                <p className="text-gray-400">We&apos;ll get back to you as soon as possible.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">

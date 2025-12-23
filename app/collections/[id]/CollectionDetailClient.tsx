@@ -18,7 +18,7 @@ interface CollectionDetailClientProps {
 }
 
 export function CollectionDetailClient({ collection, prevCollection, nextCollection }: CollectionDetailClientProps) {
-  const { playEpisode, currentEpisode, isPlaying } = useAudioPlayer()
+  const { playEpisode } = useAudioPlayer()
   
   // Fetch all episodes (with large limit to get everything)
   const { data, isLoading } = useSWR<{ episodes: Episode[] }>(
@@ -140,10 +140,7 @@ export function CollectionDetailClient({ collection, prevCollection, nextCollect
             </div>
           ) : (
             <div className="space-y-6">
-              {collectionEpisodes.map((episode) => {
-                const isThisEpisodePlaying = currentEpisode?.id === episode.id && isPlaying
-
-                return (
+              {collectionEpisodes.map((episode) => (
                   <div key={episode.id} className="glass-card p-6 hover:border-spotlight-500/50 transition-all group">
                     <div className="flex flex-col md:flex-row gap-6">
                       {/* Episode Image */}
@@ -201,8 +198,7 @@ export function CollectionDetailClient({ collection, prevCollection, nextCollect
                       </div>
                     </div>
                   </div>
-                )
-              })}
+              ))}
             </div>
           )}
         </div>

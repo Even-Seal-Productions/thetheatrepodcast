@@ -57,7 +57,6 @@ function EpisodesContent() {
     setEpisodes([])
     setHasMore(true)
     setInitialLoadComplete(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
   // Update episodes when data changes

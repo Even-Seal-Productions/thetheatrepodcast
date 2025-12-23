@@ -22,7 +22,7 @@ export default function PrivacyPage() {
                 <div>
                   <h2 className="text-2xl font-display font-bold text-white mb-4">Your Privacy Matters</h2>
                   <p className="text-gray-300 mb-4">
-                    The Theatre Podcast with Alan Seales ("we", "us", or "our") is committed to protecting your privacy.
+                    The Theatre Podcast with Alan Seales (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is committed to protecting your privacy.
                     This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.
                   </p>
                 </div>
@@ -129,7 +129,7 @@ export default function PrivacyPage() {
               <ul className="list-disc list-inside text-gray-300 space-y-2 mb-6">
                 <li>Right to access your personal data</li>
                 <li>Right to rectification of inaccurate data</li>
-                <li>Right to erasure ("right to be forgotten")</li>
+                <li>Right to erasure (&quot;right to be forgotten&quot;)</li>
                 <li>Right to restrict processing</li>
                 <li>Right to data portability</li>
                 <li>Right to object to processing</li>
@@ -168,7 +168,7 @@ export default function PrivacyPage() {
 
             {/* Children's Privacy */}
             <section className="glass-card p-8">
-              <h2 className="text-2xl font-display font-bold text-white mb-4">Children's Privacy</h2>
+              <h2 className="text-2xl font-display font-bold text-white mb-4">Children&apos;s Privacy</h2>
               <p className="text-gray-300">
                 Our website is not intended for children under 13 years of age. We do not knowingly
                 collect personal information from children under 13.
@@ -180,7 +180,7 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-display font-bold text-white mb-4">Changes to This Policy</h2>
               <p className="text-gray-300">
                 We may update this Privacy Policy from time to time. We will notify you of any changes
-                by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+                by posting the new Privacy Policy on this page and updating the &quot;Last Updated&quot; date.
               </p>
             </section>
 
