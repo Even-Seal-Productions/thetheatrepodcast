@@ -26,12 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.thetheatrepodcast.com'
   const clipUrl = `${siteUrl}/clips/${clip.slug}`
 
   return {
     title: `${clip.title} | The Theatre Podcast`,
     description: clip.description || `Watch this clip from The Theatre Podcast with Alan Seales`,
+    alternates: {
+      canonical: `/clips/${clip.slug}`,
+    },
     openGraph: {
       title: clip.title,
       description: clip.description || `Watch this clip from The Theatre Podcast with Alan Seales`,

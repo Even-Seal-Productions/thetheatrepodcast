@@ -39,4 +39,4 @@ User-agent: FacebookBot
 Allow: /
 
 # Sitemap
-Sitemap: https://thetheatrepodcast.com/sitemap.xml
+Sitemap: https://www.thetheatrepodcast.com/sitemap.xml

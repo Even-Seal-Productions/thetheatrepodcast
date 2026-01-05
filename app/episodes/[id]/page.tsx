@@ -29,6 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: episode.title,
     description: episode.description,
+    alternates: {
+      canonical: `/episodes/${episode.slug}`,
+    },
     openGraph: {
       title: episode.title,
       description: episode.description,
@@ -58,7 +61,7 @@ export default async function EpisodePage({ params }: Props) {
   const nextEpisode = currentIndex < allEpisodes.length - 1 ? allEpisodes[currentIndex + 1] : null
 
   // Structured data for the episode
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://thetheatrepodcast.com'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.thetheatrepodcast.com'
   const episodeSchema = {
     '@context': 'https://schema.org',
     '@type': 'PodcastEpisode',

@@ -1,7 +1,7 @@
 import { SITE_CONFIG, PODCAST_PLATFORMS } from '@/lib/constants'
 
 export function StructuredData() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://thetheatrepodcast.com'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.thetheatrepodcast.com'
 
   // Website schema
   const websiteSchema = {
